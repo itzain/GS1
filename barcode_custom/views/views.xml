@@ -1,0 +1,46 @@
+<odoo>
+    <data>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="product_template_global_serial" model="ir.ui.view">
+            <field name="name">product.template.global.serial</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='barcode']" position="after">
+                    <button name="calc_global_barcode"
+                                    string="Validate Global BarCode"
+                                    type="object"
+                                    class="btn-secondary"
+                                    icon="fa-barcode"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="stock_move_barcode" model="ir.ui.view">
+            <field name="name">stock.move.barcode</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='location_dest_id']" position="before">
+                    <field name="barcode" required="1"/>
+                </xpath>
+                <xpath expr="//field[@name='location_dest_id']" position="after">
+
+                    <field name="global_barcode"/>
+                    <field name="barcode_date"/>
+                    <field name="serial_no"/>
+                </xpath>
+                <xpath expr="//field[@name='lot_name']" position="attributes">
+                    <attribute name="string">Lot / Batch Number</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
